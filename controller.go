@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/revel/revel/logger"
-	"github.com/revel/revel/session"
-	"github.com/revel/revel/utils"
+	"github.com/wiselike/revel/logger"
+	"github.com/wiselike/revel/session"
+	"github.com/wiselike/revel/utils"
 )
 
 // Controller Revel's controller structure that gets embedded in user defined

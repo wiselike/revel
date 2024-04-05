@@ -1,4 +1,4 @@
-module github.com/revel/revel
+module github.com/wiselike/revel
 
 go 1.17
 

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/revel/revel/session"
-	"github.com/revel/revel/utils"
+	"github.com/wiselike/revel/session"
+	"github.com/wiselike/revel/utils"
 )
 
 // Revel's variables server, router, etc.

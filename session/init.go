@@ -1,7 +1,7 @@
 package session
 
 // The logger for the session.
-import "github.com/revel/revel/logger"
+import "github.com/wiselike/revel/logger"
 
 var sessionLog logger.MultiLogger
 

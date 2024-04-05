@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/revel/revel"
+	"github.com/wiselike/revel"
 )
 
 const (
@@ -478,7 +478,7 @@ func TestURL(t *testing.T) {
 		"http://stackoverflow.com/questions/27812164/can-i-import-3rd-party-package-into-golang-playground":                    true,
 		"https://tour.golang.org/welcome/4":                                                                                    true,
 		"https://revel.github.io/":                                                                                             true,
-		"https://github.com/revel/revel/commit/bd1d083ee4345e919b3bca1e4c42ca682525e395#diff-972a2b2141d27e9d7a8a4149a7e28eef": true,
+		"https://github.com/wiselike/revel/commit/bd1d083ee4345e919b3bca1e4c42ca682525e395#diff-972a2b2141d27e9d7a8a4149a7e28eef": true,
 		"https://github.com/ndevilla/iniparser/pull/82#issuecomment-261817064":                                                 true,
 		"http://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=baidu&wd=golang":                                            true,
 		"http://www.baidu.com/link?url=DrWkM_beo2M5kB5sLYnItKSQ0Ib3oDhKcPprdtLzAWNfFt_VN5oyD3KwnAKT6Xsk":                       true,

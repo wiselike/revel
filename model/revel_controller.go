@@ -3,7 +3,7 @@ package model
 import (
 	"sync"
 
-	"github.com/revel/revel/utils"
+	"github.com/wiselike/revel/utils"
 )
 
 type RevelController struct {

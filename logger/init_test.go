@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/revel/config"
-	"github.com/revel/revel/logger"
+	"github.com/wiselike/revel/logger"
 	"github.com/stretchr/testify/assert"
 )
 

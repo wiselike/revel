@@ -18,7 +18,7 @@ import (
 	"sync"
 
 	"github.com/revel/pathtree"
-	"github.com/revel/revel/logger"
+	"github.com/wiselike/revel/logger"
 	"golang.org/x/net/http/httpguts"
 )
 

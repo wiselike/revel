@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/revel/revel"
-	"github.com/revel/revel/session"
+	"github.com/wiselike/revel"
+	"github.com/wiselike/revel/session"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -13,13 +13,13 @@ import (
 	"strings"
 
 	"github.com/revel/config"
-	"github.com/revel/revel/logger"
-	"github.com/revel/revel/model"
+	"github.com/wiselike/revel/logger"
+	"github.com/wiselike/revel/model"
 )
 
 const (
 	// RevelImportPath Revel framework import path.
-	RevelImportPath = "github.com/revel/revel"
+	RevelImportPath = "github.com/wiselike/revel"
 )
 
 const (
@@ -43,7 +43,7 @@ var (
 	DevMode bool   // if true, RunMode is a development mode.
 
 	// Revel installation details.
-	RevelPath string // e.g. "$GOPATH/src/github.com/revel/revel"
+	RevelPath string // e.g. "$GOPATH/src/github.com/wiselike/revel"
 
 	// Where to look for templates
 	// Ordered by priority. (Earlier paths take precedence over later paths.)

@@ -229,8 +229,6 @@ func updateLog(inputmode string) (returnMode string) {
 				packagePathMap[k] = v.(string)
 			}
 		}
-	} else {
-		RevelLog.Warn("Failed to unpack json file", "error", err, "Json", inputmode)
 	}
 
 	var newContext *config.Context

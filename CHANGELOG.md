@@ -65,7 +65,7 @@
 
 * no changes
 
-[[revel/modules](https://github.com/revel/modules)]
+[[revel/modules](https://github.com/wiselike/revel-modules)]
 
 * 852ea71 Merge branch 'master' into develop
 * 789324e Merge pull request #105 from ptman/lint
@@ -185,7 +185,7 @@
 
 * no changes
 
-[[revel/modules](https://github.com/revel/modules)]
+[[revel/modules](https://github.com/wiselike/revel-modules)]
 
 * e1fdc01 Merge pull request #103 from revel/master
 * 80d53e2 Merge pull request #102 from notzippy/go-mod
@@ -355,7 +355,7 @@ This release is focused on improving the security and resolving some issues.
 * Generate same value of `AppVersion` regardless of where Revel is run revel/cmd#108
 * Added referrer policy security header revel/cmd#114
 
-[[revel/modules](https://github.com/revel/modules)]
+[[revel/modules](https://github.com/wiselike/revel-modules)]
 * Added directory representation to static module revel/modules#46
 * Gorp enhancements (added abstraction layer for transactions and database connection so both can be used), Added security fix for CSRF module revel/modules#68
 * Added authorization configuration options to job page revel/modules#44
@@ -515,7 +515,7 @@ func (c WebSocket) RoomSocket(user string, ws revel.ServerWebSocket) revel.Resul
 
 * no changes
 
-[[revel/modules](https://github.com/revel/modules)]
+[[revel/modules](https://github.com/wiselike/revel-modules)]
 
 * Added Gorm module
 
@@ -740,8 +740,8 @@ module.testrunner = github.com/wiselike/revel/modules/testrunner
 to the new paths:
 
 ``` ini
-module.static=github.com/revel/modules/static
-module.testrunner = github.com/revel/modules/testrunner
+module.static=github.com/wiselike/revel-modules/static
+module.testrunner = github.com/wiselike/revel-modules/testrunner
 ```
 
 ## [ROADMAP] Focus: Improve Internal Organization
@@ -758,7 +758,7 @@ The majority of our effort here is increasing the modularity of the code within 
   - [x] Eagerly load templates in dev mode #[353](https://github.com/wiselike/revel/issues/353) PR#[844](https://github.com/wiselike/revel/pull/844)
   - [x] Add an option to trim whitespace from rendered HTML #[800](https://github.com/wiselike/revel/issues/800)
   - [x] Remove built-in mailer in favor of 3rd party package #[783](https://github.com/wiselike/revel/issues/783)
-  - [x] Allow local reverse proxy access to jobs module status page for IPv4/6 #[481](https://github.com/wiselike/revel/issues/481) PR#[6](https://github.com/revel/modules/pull/6) PR#[7](https://github.com/revel/modules/pull/7)
+  - [x] Allow local reverse proxy access to jobs module status page for IPv4/6 #[481](https://github.com/wiselike/revel/issues/481) PR#[6](https://github.com/wiselike/revel-modules/pull/6) PR#[7](https://github.com/wiselike/revel-modules/pull/7)
   - [x] Add default http.Status code for render methods. #[728](https://github.com/wiselike/revel/issues/728)
   - [x] add domain for cookie #[770](https://github.com/wiselike/revel/issues/770) PR#[882](https://github.com/wiselike/revel/pull/882)
   - [x] production mode panic bug #[831](https://github.com/wiselike/revel/issues/831) PR#[881](https://github.com/wiselike/revel/pull/881)
@@ -777,7 +777,7 @@ The majority of our effort here is increasing the modularity of the code within 
   - [x] Use a separate directory for revel project binaries #[17](https://github.com/wiselike/revel-cmd/pull/17) #[819](https://github.com/wiselike/revel/issues/819)
   - [x] Overwrite generated app files instead of deleting directory #[551](https://github.com/wiselike/revel/issues/551) PR#[23](https://github.com/wiselike/revel-cmd/pull/23)
 - `revel/modules`:
-  - [x] Adds runtime pprof/trace support #[9](https://github.com/revel/modules/pull/9)
+  - [x] Adds runtime pprof/trace support #[9](https://github.com/wiselike/revel-modules/pull/9)
 - Community Goals:
   - [x] Issue labels #[545](https://github.com/wiselike/revel/issues/545)
     - [x] Sync up labels/milestones in other repos #[721](https://github.com/wiselike/revel/issues/721)

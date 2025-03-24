@@ -1,9 +1,7 @@
 language: go
 
 go:
-  - "1.13.x"
-  - "1.14.x"
-  - "1.15.x"
+  - "1.19.x"
   - "tip"
 
 os:
@@ -50,8 +48,8 @@ install:
   - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-modules ../modules/
   - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-cmd ../cmd/
   - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-config ../config/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/cron ../cron/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/examples ../examples/
+  - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-cron ../cron/
+  - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-examples ../examples/
   - go get -t -v github.com/wiselike/revel/...
 
 script:

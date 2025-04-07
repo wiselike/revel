@@ -61,7 +61,7 @@
 * 3d924a0 Lint fixes
 * d64c7f1 develop v1.1.0-dev
 
-[[revel/config](https://github.com/revel/config)]
+[[revel/config](https://github.com/wiselike/revel-config)]
 
 * no changes
 
@@ -181,7 +181,7 @@
 * 7dce3d8 fixed import "C"
 * 5c8d5bc develop v1.0.0-dev
 
-[[revel/config](https://github.com/revel/config)]
+[[revel/config](https://github.com/wiselike/revel-config)]
 
 * no changes
 
@@ -511,7 +511,7 @@ func (c WebSocket) RoomSocket(user string, ws revel.ServerWebSocket) revel.Resul
 
 * no changes
 
-[[revel/config](https://github.com/revel/config)]
+[[revel/config](https://github.com/wiselike/revel-config)]
 
 * no changes
 
@@ -656,9 +656,9 @@ Deprecating support for golang versions prior to 1.7
   - `revel package` & `revel build` now supports environment mode PR revel/cmd#14
   - `revel clean` now cleans generated routes too PR revel/cmd#6
 - `revel/config`:
-  - Upstream `robfig/config` refresh and import path updated from `github.com/wiselike/revel/config` to `github.com/revel/config`, PR #868
+  - Upstream `robfig/config` refresh and import path updated from `github.com/wiselike/revel/config` to `github.com/wiselike/revel-config`, PR #868
   - Config loading order and external configuration to override application configuration revel/config#4 [commit](https://github.com/wiselike/revel/commit/f3a422c228994978ae0a5dd837afa97248b26b41)
-  - Application config error will produce insight on error PR revel/config#3 [commit](https://github.com/revel/config/commit/85a123061070899a82f59c5ef6187e8fb4457f64)
+  - Application config error will produce insight on error PR revel/config#3 [commit](https://github.com/wiselike/revel-config/commit/85a123061070899a82f59c5ef6187e8fb4457f64)
 - `revel/modules`:
   - Testrunner enhancements
     - Minor improvement on testrunner module PR #820, #895

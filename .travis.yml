@@ -49,7 +49,7 @@ install:
   - 'echo "Travis branch: $TRAVIS_BRANCH, Revel dependency branch: $REVEL_BRANCH"'
   - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-modules ../modules/
   - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-cmd ../cmd/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/config ../config/
+  - git clone -b $REVEL_BRANCH git://github.com/wiselike/revel-config ../config/
   - git clone -b $REVEL_BRANCH git://github.com/revel/cron ../cron/
   - git clone -b $REVEL_BRANCH git://github.com/revel/examples ../examples/
   - go get -t -v github.com/wiselike/revel/...

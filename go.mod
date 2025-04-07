@@ -10,10 +10,10 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/mattn/go-colorable v0.1.12
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/revel/config v1.0.0
-	github.com/revel/log15 v2.11.20+incompatible
-	github.com/revel/pathtree v0.0.0-20140121041023-41257a1839e9
 	github.com/stretchr/testify v1.7.1
+	github.com/wiselike/revel-config v1.0.0
+	github.com/wiselike/revel-log15 v2.11.20+incompatible
+	github.com/wiselike/revel-pathtree v0.0.0-20140121041023-41257a1839e9
 	github.com/xeonx/timeago v1.0.0-rc5
 	golang.org/x/net v0.7.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0

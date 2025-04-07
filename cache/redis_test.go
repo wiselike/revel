@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/revel/config"
+	config "github.com/wiselike/revel-config"
 	"github.com/wiselike/revel"
 )
 

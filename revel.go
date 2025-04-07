@@ -12,7 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/revel/config"
+	config "github.com/wiselike/revel-config"
 	"github.com/wiselike/revel/logger"
 	"github.com/wiselike/revel/model"
 )

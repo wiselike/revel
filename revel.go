@@ -93,10 +93,11 @@ var (
 // Init initializes Revel -- it provides paths for getting around the app.
 //
 // Params:
-//   mode - the run mode, which determines which app.conf settings are used.
-//   importPath - the Go import path of the application.
-//   srcPath - the path to the source directory, containing Revel and the app.
-//     If not specified (""), then a functioning Go installation is required.
+//
+//	mode - the run mode, which determines which app.conf settings are used.
+//	importPath - the Go import path of the application.
+//	srcPath - the path to the source directory, containing Revel and the app.
+//	  If not specified (""), then a functioning Go installation is required.
 func Init(inputmode, importPath, srcPath string) {
 	RevelConfig = &model.RevelContainer{}
 	// Ignore trailing slashes.
@@ -278,7 +279,12 @@ func ResolveImportPath(importPath string) (string, error) {
 		return path, nil
 	}
 
-	modPkg, err := build.Import(importPath, RevelPath, build.FindOnly)
+	buildCtx := build.Default
+	gopaths := filepath.SplitList(buildCtx.GOPATH)
+	if len(gopaths) == 0 {
+		buildCtx.GOPATH = buildCtx.GOROOT
+	}
+	modPkg, err := buildCtx.Import(importPath, RevelPath, build.FindOnly)
 	if err != nil {
 		return "", err
 	}
@@ -298,28 +304,19 @@ func findSrcPaths(importPath string) (revelSourcePath, appSourcePath string) {
 	if importFsPath, found := packagePathMap[importPath]; found {
 		return packagePathMap[RevelImportPath], importFsPath
 	}
-	var (
-		gopaths = filepath.SplitList(build.Default.GOPATH)
-		goroot  = build.Default.GOROOT
-	)
 
+	buildCtx := build.Default
+	gopaths := filepath.SplitList(buildCtx.GOPATH)
 	if len(gopaths) == 0 {
-		RevelLog.Fatal("GOPATH environment variable is not set. " +
-			"Please refer to http://golang.org/doc/code.html to configure your Go environment.")
+		buildCtx.GOPATH = buildCtx.GOROOT
 	}
 
-	if ContainsString(gopaths, goroot) {
-		RevelLog.Fatalf("GOPATH (%s) must not include your GOROOT (%s). "+
-			"Please refer to http://golang.org/doc/code.html to configure your Go environment.",
-			gopaths, goroot)
-	}
-
-	appPkg, err := build.Import(importPath, "", build.FindOnly)
+	appPkg, err := buildCtx.Import(importPath, "", build.FindOnly)
 	if err != nil {
 		RevelLog.Panic("Failed to import "+importPath+" with error:", "error", err)
 	}
 
-	revelPkg, err := build.Import(RevelImportPath, appPkg.Dir, build.FindOnly)
+	revelPkg, err := buildCtx.Import(RevelImportPath, appPkg.Dir, build.FindOnly)
 	if err != nil {
 		RevelLog.Fatal("Failed to find Revel with error:", "error", err)
 	}

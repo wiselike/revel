@@ -100,7 +100,8 @@ func (c callHandler) Log(log *log15.Record) error {
 	ctx := log.Ctx
 	var ctxMap ContextMap
 	if len(ctx) > 0 {
-		ctxMap = make(ContextMap, len(ctx)/2)
+		ctxMap.Keys = make([]string, 0, len(ctx)/2)
+		ctxMap.Data = make(map[string]interface{}, len(ctx)/2)
 
 		for i := 0; i < len(ctx); i += 2 {
 			v := ctx[i]
@@ -114,24 +115,27 @@ func (c callHandler) Log(log *log15.Record) error {
 			} else {
 				value = "LOGGER_VALUE_MISSING"
 			}
-			ctxMap[key] = value
+			ctxMap.Add(key, value)
 		}
 	} else {
-		ctxMap = make(ContextMap, 0)
+		ctxMap.Data = make(map[string]interface{}, 0)
 	}
 	r := &Record{Message: log.Msg, Context: ctxMap, Time: log.Time, Level: LogLevel(log.Lvl), Call: CallStack(log.Call)}
 	return c(r)
 }
 
 // Internally used contextMap, allows conversion of map to map[string]string.
-type ContextMap map[string]interface{}
+type ContextMap struct {
+	Keys []string
+	Data map[string]interface{}
+}
 
 // Convert the context map to be string only values, any non string values are ignored.
-func (m ContextMap) StringMap() (newMap map[string]string) {
+func (m *ContextMap) StringMap() (newMap map[string]string) {
 	if m != nil {
 		newMap = map[string]string{}
-		for key, value := range m {
-			if svalue, isstring := value.(string); isstring {
+		for _, key := range m.Keys {
+			if svalue, isstring := m.Data[key].(string); isstring {
 				newMap[key] = svalue
 			}
 		}
@@ -139,6 +143,9 @@ func (m ContextMap) StringMap() (newMap map[string]string) {
 	return
 }
 
-func (m ContextMap) Add(key string, value interface{}) {
-	m[key] = value
+func (m *ContextMap) Add(key string, value interface{}) {
+	if _, ok := m.Data[key]; !ok {
+		m.Keys = append(m.Keys, key)
+	}
+	m.Data[key] = value
 }

@@ -255,10 +255,10 @@ func updateLog(inputmode string) (returnMode string) {
 		newContext.SetOption(SPECIAL_USE_FLAG, fmt.Sprint(specialUseFlag))
 	}
 
-	appHandle := logger.InitializeFromConfig(BasePath, newContext)
+	rootHandle := logger.InitializeFromConfig(BasePath, newContext)
 
 	// Set all the log handlers
-	setAppLog(AppLog, appHandle)
+	setRootLog(rootHandle)
 
 	return
 }

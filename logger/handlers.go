@@ -67,18 +67,17 @@ func MatchHandler(key string, value interface{}, h LogHandler) LogHandler {
 // context matches the value. For example, to only log records
 // from your ui package:
 //
-//    log.MatchFilterHandler("pkg", "app/ui", log.StdoutHandler)
-//
+//	log.MatchFilterHandler("pkg", "app/ui", log.StdoutHandler)
 func MatchFilterHandler(key string, value interface{}, h LogHandler) LogHandler {
 	return FilterHandler(func(r *Record) (pass bool) {
-		return r.Context[key] == value
+		return r.Context.Data[key] == value
 	}, h)
 }
 
 // If match then A handler is called otherwise B handler is called.
 func MatchAbHandler(key string, value interface{}, a, b LogHandler) LogHandler {
 	return FuncHandler(func(r *Record) error {
-		if r.Context[key] == value {
+		if r.Context.Data[key] == value {
 			return a.Log(r)
 		} else if b != nil {
 			return b.Log(r)
@@ -110,7 +109,7 @@ func matchMapHandler(matchMap map[string]interface{}, inverse bool, a LogHandler
 	return FuncHandler(func(r *Record) error {
 		matchCount := 0
 		for k, v := range matchMap {
-			value, found := r.Context[k]
+			value, found := r.Context.Data[k]
 			if !found {
 				return nil
 			}
@@ -132,7 +131,7 @@ func matchMapHandler(matchMap map[string]interface{}, inverse bool, a LogHandler
 // Uses the `log15.FilterHandler` to perform this task.
 func NotMatchHandler(key string, value interface{}, h LogHandler) LogHandler {
 	return FilterHandler(func(r *Record) (pass bool) {
-		return r.Context[key] != value
+		return r.Context.Data[key] != value
 	}, h)
 }
 

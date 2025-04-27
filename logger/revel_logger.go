@@ -21,49 +21,82 @@ func SetDefaultLog(fromLog MultiLogger) {
 	log.SetFlags(0)
 }
 
+// Print a debug message.
+func (rl *RevelLogger) Debug(msg string, ctx ...interface{}) {
+	// make StackDepth happy
+	rl.Logger.Debug(msg, ctx...)
+}
+
+// Print a formatted debug message.
 func (rl *RevelLogger) Debugf(msg string, param ...interface{}) {
-	rl.Debug(fmt.Sprintf(msg, param...))
+	rl.Logger.Debug(fmt.Sprintf(msg, param...))
+}
+
+// Print a info message.
+func (rl *RevelLogger) Info(msg string, ctx ...interface{}) {
+	// make StackDepth happy
+	rl.Logger.Info(msg, ctx...)
 }
 
 // Print a formatted info message.
 func (rl *RevelLogger) Infof(msg string, param ...interface{}) {
-	rl.Info(fmt.Sprintf(msg, param...))
+	rl.Logger.Info(fmt.Sprintf(msg, param...))
+}
+
+// Print a warn message.
+func (rl *RevelLogger) Warn(msg string, ctx ...interface{}) {
+	// make StackDepth happy
+	rl.Logger.Warn(msg, ctx...)
 }
 
 // Print a formatted warn message.
 func (rl *RevelLogger) Warnf(msg string, param ...interface{}) {
-	rl.Warn(fmt.Sprintf(msg, param...))
+	rl.Logger.Warn(fmt.Sprintf(msg, param...))
+}
+
+// Print an error message.
+func (rl *RevelLogger) Error(msg string, ctx ...interface{}) {
+	// make StackDepth happy
+	rl.Logger.Error(msg, ctx...)
 }
 
 // Print a formatted error message.
 func (rl *RevelLogger) Errorf(msg string, param ...interface{}) {
-	rl.Error(fmt.Sprintf(msg, param...))
+	rl.Logger.Error(fmt.Sprintf(msg, param...))
+}
+
+// Print a critical message.
+func (rl *RevelLogger) Crit(msg string, ctx ...interface{}) {
+	// make StackDepth happy
+	rl.Logger.Crit(msg, ctx...)
 }
 
 // Print a formatted critical message.
 func (rl *RevelLogger) Critf(msg string, param ...interface{}) {
-	rl.Crit(fmt.Sprintf(msg, param...))
-}
-
-// Print a formatted fatal message.
-func (rl *RevelLogger) Fatalf(msg string, param ...interface{}) {
-	rl.Fatal(fmt.Sprintf(msg, param...))
-}
-
-// Print a formatted panic message.
-func (rl *RevelLogger) Panicf(msg string, param ...interface{}) {
-	rl.Panic(fmt.Sprintf(msg, param...))
+	rl.Logger.Crit(fmt.Sprintf(msg, param...))
 }
 
 // Print a critical message and call os.Exit(1).
 func (rl *RevelLogger) Fatal(msg string, ctx ...interface{}) {
-	rl.Crit(msg, ctx...)
+	rl.Logger.Crit(msg, ctx...)
+	os.Exit(1)
+}
+
+// Print a formatted fatal message.
+func (rl *RevelLogger) Fatalf(msg string, param ...interface{}) {
+	rl.Logger.Crit(fmt.Sprintf(msg, param...))
 	os.Exit(1)
 }
 
 // Print a critical message and panic.
 func (rl *RevelLogger) Panic(msg string, ctx ...interface{}) {
-	rl.Crit(msg, ctx...)
+	rl.Logger.Crit(msg, ctx...)
+	panic(msg)
+}
+
+// Print a formatted panic message.
+func (rl *RevelLogger) Panicf(msg string, param ...interface{}) {
+	rl.Logger.Crit(fmt.Sprintf(msg, param...))
 	panic(msg)
 }
 
@@ -82,7 +115,7 @@ func (rl *RevelLogger) SetStackDepth(amount int) MultiLogger {
 // Create a new logger.
 func New(ctx ...interface{}) MultiLogger {
 	r := &RevelLogger{Logger: log15.New(ctx...)}
-	// r.SetStackDepth(2)
+	r.SetStackDepth(1)
 	return r
 }
 

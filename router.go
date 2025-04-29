@@ -161,13 +161,13 @@ func treePath(method, path string) string {
 	return "/" + method + path
 }
 
-//validMethod is copied from net/http/request.go
+// validMethod is copied from net/http/request.go
 // used to validate the X-HTTP-Method-Override so that only valid HTTP method characters are allowed (in the same way as in net/http/request.go).
 func validMethod(method string) bool {
 	return len(method) > 0 && strings.IndexFunc(method, isNotToken) == -1
 }
 
-//isNotToken is copied from net/http/http.go
+// isNotToken is copied from net/http/http.go
 // used by validMethod to detect unacceptable characters in X-HTTP-Method-Override
 func isNotToken(r rune) bool {
 	return !httpguts.IsTokenRune(r)

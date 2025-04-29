@@ -423,7 +423,8 @@ func bindReadSeeker(params *Params, name string, typ reflect.Type) reflect.Value
 }
 
 // bindMap converts parameters using map syntax into the corresponding map. e.g.:
-//   params["a[5]"]=foo, name="a", typ=map[int]string => map[int]string{5: "foo"}
+//
+//	params["a[5]"]=foo, name="a", typ=map[int]string => map[int]string{5: "foo"}
 func bindMap(params *Params, name string, typ reflect.Type) reflect.Value {
 	var (
 		keyType   = typ.Key()

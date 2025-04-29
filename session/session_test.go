@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/wiselike/revel"
 	"github.com/wiselike/revel/session"
-	"github.com/stretchr/testify/assert"
 )
 
 // test the commands.

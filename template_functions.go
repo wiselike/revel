@@ -332,7 +332,6 @@ func TimeAgo(args ...interface{}) string {
 	default:
 		timeAgoLangs[lang] = timeago.English
 	}
-	
 
 	_, ok := timeAgoLangs[lang]
 	if !ok {

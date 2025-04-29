@@ -62,6 +62,7 @@ func NewTestSuiteEngine(engine revel.SessionEngine) TestSuite {
 
 // NewTestRequest returns an initialized *TestRequest. It is used for extending
 // testsuite package making it possible to define own methods. Example:
+//
 //	type MyTestSuite struct {
 //		testing.TestSuite
 //	}

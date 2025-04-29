@@ -31,14 +31,13 @@ import (
 //
 // Func Interceptors may apply to any / all Controllers.
 //
-//   func example(*revel.Controller) revel.Result
+//	func example(*revel.Controller) revel.Result
 //
 // Method Interceptors are provided so that properties can be set on application
 // controllers.
 //
-//   func (c AppController) example() revel.Result
-//   func (c *AppController) example() revel.Result
-//
+//	func (c AppController) example() revel.Result
+//	func (c *AppController) example() revel.Result
 type InterceptorFunc func(*Controller) Result
 
 type InterceptorMethod interface{}
@@ -137,7 +136,8 @@ var interceptors []*Interception
 // InterceptFunc installs a general interceptor.
 // This can be applied to any Controller.
 // It must have the signature of:
-//   func example(c *revel.Controller) revel.Result
+//
+//	func example(c *revel.Controller) revel.Result
 func InterceptFunc(intc InterceptorFunc, when When, target interface{}) {
 	interceptors = append(interceptors, &Interception{
 		When:         when,
@@ -149,8 +149,9 @@ func InterceptFunc(intc InterceptorFunc, when When, target interface{}) {
 }
 
 // InterceptMethod installs an interceptor method that applies to its own Controller.
-//   func (c AppController) example() revel.Result
-//   func (c *AppController) example() revel.Result
+//
+//	func (c AppController) example() revel.Result
+//	func (c *AppController) example() revel.Result
 func InterceptMethod(intc InterceptorMethod, when When) {
 	methodType := reflect.TypeOf(intc)
 	if methodType.Kind() != reflect.Func || methodType.NumOut() != 1 || methodType.NumIn() != 1 {
@@ -167,7 +168,6 @@ func InterceptMethod(intc InterceptorMethod, when When) {
 }
 
 // This item is used to provide a sortable set to be returned to the caller. This ensures calls order is maintained
-//
 type interceptorItem struct {
 	Interceptor *Interception
 	Target      reflect.Value

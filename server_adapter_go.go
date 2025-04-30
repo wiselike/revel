@@ -16,7 +16,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/revel/revel/utils"
+	"github.com/wiselike/revel/utils"
 	"golang.org/x/net/websocket"
 )
 

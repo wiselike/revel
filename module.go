@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/go-stack/stack"
-	"github.com/revel/revel/logger"
+	"github.com/wiselike/revel/logger"
 )
 
 // Module specific functions.
@@ -189,7 +189,7 @@ func addModule(name, importPath, modulePath string) {
 
 	// Hack: There is presently no way for the testrunner module to add the
 	// "test" subdirectory to the CodePaths.  So this does it instead.
-	if importPath == Config.StringDefault("module.testrunner", "github.com/revel/modules/testrunner") {
+	if importPath == Config.StringDefault("module.testrunner", "github.com/wiselike/revel-modules/testrunner") {
 		joinedPath := filepath.Join(BasePath, "tests")
 		moduleLog.Debug("Found testrunner module, adding `tests` path ", "path", joinedPath)
 		CodePaths = append(CodePaths, joinedPath)

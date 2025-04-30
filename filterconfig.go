@@ -17,38 +17,43 @@ var filterOverrides = make(map[string][]Filter)
 // the FilterConfiguringFilter, which is itself a filter stage.  For example,
 //
 // Assuming:
-//   Filters = []Filter{
-//     RouterFilter,
-//     FilterConfiguringFilter,
-//     SessionFilter,
-//     ActionInvoker,
-//   }
+//
+//	Filters = []Filter{
+//	  RouterFilter,
+//	  FilterConfiguringFilter,
+//	  SessionFilter,
+//	  ActionInvoker,
+//	}
 //
 // Add:
-//   FilterAction(App.Action).
-//     Add(OtherFilter)
 //
-//   => RouterFilter, FilterConfiguringFilter, SessionFilter, OtherFilter, ActionInvoker
+//	FilterAction(App.Action).
+//	  Add(OtherFilter)
+//
+//	=> RouterFilter, FilterConfiguringFilter, SessionFilter, OtherFilter, ActionInvoker
 //
 // Remove:
-//   FilterAction(App.Action).
-//     Remove(SessionFilter)
 //
-//   => RouterFilter, FilterConfiguringFilter, OtherFilter, ActionInvoker
+//	FilterAction(App.Action).
+//	  Remove(SessionFilter)
+//
+//	=> RouterFilter, FilterConfiguringFilter, OtherFilter, ActionInvoker
 //
 // Insert:
-//   FilterAction(App.Action).
-//     Insert(OtherFilter, revel.BEFORE, SessionFilter)
 //
-//   => RouterFilter, FilterConfiguringFilter, OtherFilter, SessionFilter, ActionInvoker
+//	FilterAction(App.Action).
+//	  Insert(OtherFilter, revel.BEFORE, SessionFilter)
+//
+//	=> RouterFilter, FilterConfiguringFilter, OtherFilter, SessionFilter, ActionInvoker
 //
 // Filter modifications may be combined between Controller and Action.  For example:
-//   FilterController(App{}).
-//     Add(Filter1)
-//   FilterAction(App.Action).
-//     Add(Filter2)
 //
-//  .. would result in App.Action being filtered by both Filter1 and Filter2.
+//	 FilterController(App{}).
+//	   Add(Filter1)
+//	 FilterAction(App.Action).
+//	   Add(Filter2)
+//
+//	.. would result in App.Action being filtered by both Filter1 and Filter2.
 //
 // Note: the last filter stage is not subject to the configurator.  In
 // particular, Add() adds a filter to the second-to-last place.
@@ -66,7 +71,8 @@ func newFilterConfigurator(controllerName, methodName string) FilterConfigurator
 
 // FilterController returns a configurator for the filters applied to all
 // actions on the given controller instance.  For example:
-//   FilterController(MyController{})
+//
+//	FilterController(MyController{})
 func FilterController(controllerInstance interface{}) FilterConfigurator {
 	t := reflect.TypeOf(controllerInstance)
 	for t.Kind() == reflect.Ptr {
@@ -77,7 +83,8 @@ func FilterController(controllerInstance interface{}) FilterConfigurator {
 
 // FilterAction returns a configurator for the filters applied to the given
 // controller method. For example:
-//   FilterAction(MyController.MyAction)
+//
+//	FilterAction(MyController.MyAction)
 func FilterAction(methodRef interface{}) FilterConfigurator {
 	var (
 		methodValue = reflect.ValueOf(methodRef)
@@ -133,9 +140,10 @@ func (conf FilterConfigurator) rmFilter(target Filter, fc []Filter) []Filter {
 
 // Insert a filter into the filter chain before or after another.
 // This may be called with the BEFORE or AFTER constants, for example:
-//   revel.FilterAction(App.Index).
-//     Insert(MyFilter, revel.BEFORE, revel.ActionInvoker).
-//     Insert(MyFilter2, revel.AFTER, revel.PanicFilter)
+//
+//	revel.FilterAction(App.Index).
+//	  Insert(MyFilter, revel.BEFORE, revel.ActionInvoker).
+//	  Insert(MyFilter2, revel.AFTER, revel.PanicFilter)
 func (conf FilterConfigurator) Insert(insert Filter, where When, target Filter) FilterConfigurator {
 	if where != BEFORE && where != AFTER {
 		panic("where must be BEFORE or AFTER")

@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/revel/config"
-	"github.com/revel/revel/logger"
+	config "github.com/wiselike/revel-config"
+	"github.com/wiselike/revel/logger"
 )
 
 const (

@@ -1,7 +1,7 @@
 package revel
 
 import (
-	"github.com/revel/revel/logger"
+	"github.com/wiselike/revel/logger"
 )
 
 // Logger.
@@ -17,9 +17,9 @@ var (
 	// It is based off of `RootLog`.
 	RevelLog = RootLog.New("module", "revel")
 
-	// This is the handler for the AppLog, it is stored so that if the AppLog is changed it can be assigned to the
-	// new AppLog.
-	appLogHandler *logger.CompositeMultiHandler
+	// This is the handler for the RootLog, it is stored so that if the RootLog is changed it can be assigned to the
+	// new RootLog.
+	rootLogHandler *logger.CompositeMultiHandler
 
 	// System logger.
 	SysLog = AppLog.New("section", "system")
@@ -35,28 +35,24 @@ func init() {
 }
 
 func initLoggers() {
-	appHandle := logger.InitializeFromConfig(BasePath, Config)
+	rootHandle := logger.InitializeFromConfig(BasePath, Config)
 
 	// Set all the log handlers
-	setAppLog(AppLog, appHandle)
+	setRootLog(rootHandle)
 }
 
 // Set the application log and handler, if handler is nil it will
 // use the same handler used to configure the application log before.
-func setAppLog(appLog logger.MultiLogger, appHandler *logger.CompositeMultiHandler) {
-	if appLog != nil {
-		AppLog = appLog
-	}
-
-	if appHandler != nil {
-		appLogHandler = appHandler
+func setRootLog(rootHandle *logger.CompositeMultiHandler) {
+	if rootHandle != nil {
+		rootLogHandler = rootHandle
 		// Set the app log and the handler for all forked loggers
-		RootLog.SetHandler(appLogHandler)
+		RootLog.SetHandler(rootLogHandler)
 
 		// Set the system log handler - this sets golang writer stream to the
 		// sysLog router
 		logger.SetDefaultLog(SysLog)
 		SysLog.SetStackDepth(5)
-		SysLog.SetHandler(appLogHandler)
+		SysLog.SetHandler(rootLogHandler)
 	}
 }

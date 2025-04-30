@@ -35,7 +35,6 @@ const (
 // Session data, can be any data, there are reserved keywords used by the storage data
 // SessionIDKey Is the key name for the session
 // TimestampKey Is the time that the session should expire
-//
 type Session map[string]interface{}
 
 func NewSession() Session {

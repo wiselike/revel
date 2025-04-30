@@ -52,8 +52,8 @@ func TerminalFormatHandler(noColor bool, smallDate bool) LogFormat {
 		}
 
 		b := &bytes.Buffer{}
-		caller, _ := r.Context["caller"].(string)
-		module, _ := r.Context["module"].(string)
+		caller, _ := r.Context.Data["caller"].(string)
+		module, _ := r.Context.Data["module"].(string)
 		if noColor == false && color > 0 {
 			if len(module) > 0 {
 				fmt.Fprintf(b, "\x1b[%dm%-5s\x1b[0m %s %6s %13s: %-40s ", color, levelString[r.Level], r.Time.Format(dateFormat), module, caller, r.Message)
@@ -65,7 +65,7 @@ func TerminalFormatHandler(noColor bool, smallDate bool) LogFormat {
 		}
 
 		i := 0
-		for k, v := range r.Context {
+		for _, k := range r.Context.Keys {
 			if i != 0 {
 				b.WriteByte(' ')
 			}
@@ -74,7 +74,7 @@ func TerminalFormatHandler(noColor bool, smallDate bool) LogFormat {
 				continue
 			}
 
-			v := formatLogfmtValue(v)
+			v := formatLogfmtValue(r.Context.Data[k])
 
 			// TODO: we should probably check that all of your key bytes aren't invalid
 			if noColor == false && color > 0 {
@@ -214,8 +214,8 @@ func JsonFormatEx(pretty, lineSeparated bool) LogFormat {
 		props["t"] = r.Time
 		props["lvl"] = levelString[r.Level]
 		props["msg"] = r.Message
-		for k, v := range r.Context {
-			props[k] = formatJsonValue(v)
+		for _, k := range r.Context.Keys {
+			props[k] = formatJsonValue(r.Context.Data[k])
 		}
 
 		b, err := jsonMarshal(props)

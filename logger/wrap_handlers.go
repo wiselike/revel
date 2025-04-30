@@ -54,11 +54,13 @@ func SyncHandler(h LogHandler) LogHandler {
 // it if you write your own Handler.
 func LazyHandler(h LogHandler) LogHandler {
 	return FuncHandler(func(r *Record) error {
-		for k, v := range r.Context {
+		for k, v := range r.Context.Data {
 			if lz, ok := v.(Lazy); ok {
-				_, err := evaluateLazy(lz)
+				v, err := evaluateLazy(lz)
 				if err != nil {
-					r.Context[errorKey] = "bad lazy " + k
+					r.Context.Add(errorKey, "bad lazy "+k)
+				} else {
+					r.Context.Add(k, v)
 				}
 			}
 		}

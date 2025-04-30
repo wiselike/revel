@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/revel/revel.svg?branch=master)](https://travis-ci.org/revel/revel) 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Go Report Card](https://goreportcard.com/badge/github.com/revel/revel)](https://goreportcard.com/report/github.com/revel/revel)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wiselike/revel)](https://goreportcard.com/report/github.com/wiselike/revel)
 
 A high productivity, full-stack web framework for the [Go language](https://www.golang.org).
 
@@ -14,7 +14,7 @@ Current Version: 1.2.0-dev (2022-04-11)
 
 Install Revel:
 
-	go install github.com/revel/cmd/revel@latest
+	go install github.com/wiselike/revel-cmd/revel@latest
 
 
 Create & Run your app:
@@ -33,13 +33,13 @@ Open http://localhost:9000 in your browser and you should see "It works!"
 ## Learn More
 
 * [Manual, Samples, Godocs, etc](https://revel.github.io)
-* [Apps using Revel](https://github.com/revel/revel/wiki/Apps-in-the-Wild)
-* [Articles Featuring Revel](https://github.com/revel/revel/wiki/Articles)
+* [Apps using Revel](https://github.com/wiselike/revel/wiki/Apps-in-the-Wild)
+* [Articles Featuring Revel](https://github.com/wiselike/revel/wiki/Articles)
 
 ## Contributing
 
-* [Contributing Code Guidelines](https://github.com/revel/revel/blob/master/CONTRIBUTING.md)
-* [Revel Contributors](https://github.com/revel/revel/graphs/contributors)
+* [Contributing Code Guidelines](https://github.com/wiselike/revel/blob/master/CONTRIBUTING.md)
+* [Revel Contributors](https://github.com/wiselike/revel/graphs/contributors)
 
 ## Contributors
 

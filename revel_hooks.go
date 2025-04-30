@@ -71,28 +71,27 @@ func (slice RevelHooks) Swap(i, j int) {
 //
 // Example:
 //
-//      // from: yourapp/app/controllers/somefile.go
-//      func InitDB() {
-//          // do DB connection stuff here
-//      }
+//	// from: yourapp/app/controllers/somefile.go
+//	func InitDB() {
+//	    // do DB connection stuff here
+//	}
 //
-//      func FillCache() {
-//          // fill a cache from DB
-//          // this depends on InitDB having been run
-//      }
+//	func FillCache() {
+//	    // fill a cache from DB
+//	    // this depends on InitDB having been run
+//	}
 //
-//      // from: yourapp/app/init.go
-//      func init() {
-//          // set up filters...
+//	// from: yourapp/app/init.go
+//	func init() {
+//	    // set up filters...
 //
-//          // register startup functions
-//          revel.OnAppStart(InitDB)
-//          revel.OnAppStart(FillCache)
-//      }
+//	    // register startup functions
+//	    revel.OnAppStart(InitDB)
+//	    revel.OnAppStart(FillCache)
+//	}
 //
 // This can be useful when you need to establish connections to databases or third-party services,
 // setup app components, compile assets, or any thing you need to do between starting Revel and accepting connections.
-//
 func OnAppStart(f func(), order ...int) {
 	startupHooks = startupHooks.Add(f, order...)
 }

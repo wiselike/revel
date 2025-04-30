@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/revel/config"
+	config "github.com/wiselike/revel-config"
 )
 
 type A struct {

@@ -5,7 +5,6 @@
 package revel
 
 import (
-	"fmt"
 	"net/http"
 	"runtime/debug"
 )
@@ -26,17 +25,11 @@ func PanicFilter(c *Controller, fc []Filter) {
 func handleInvocationPanic(c *Controller, err interface{}) {
 	error := NewErrorFromPanic(err)
 	if error != nil {
-		utilLog.Error("PanicFilter: Caught panic", "error", err, "stack", error.Stack)
-		if DevMode {
-			fmt.Println(err)
-			fmt.Println(error.Stack)
-		}
+		utilLog.Error("PanicFilter: Caught panic", "error", err)
+		utilLog.Errorf("stack: \n%s", string(error.Stack))
 	} else {
-		utilLog.Error("PanicFilter: Caught panic, unable to determine stack location", "error", err, "stack", string(debug.Stack()))
-		if DevMode {
-			fmt.Println(err)
-			fmt.Println("stack", string(debug.Stack()))
-		}
+		utilLog.Error("PanicFilter: Caught panic, unable to determine stack location", "error", err)
+		utilLog.Errorf("stack: \n%s", string(debug.Stack()))
 	}
 
 	if error == nil && DevMode {

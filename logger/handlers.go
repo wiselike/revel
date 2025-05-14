@@ -3,6 +3,10 @@ package logger
 import (
 	"fmt"
 	"io"
+	"regexp"
+	"strings"
+
+	"github.com/go-stack/stack"
 )
 
 type LevelFilterHandler struct {
@@ -42,9 +46,57 @@ func NotLevelHandler(lvl LogLevel, h LogHandler) LogHandler {
 
 func CallerFileHandler(h LogHandler) LogHandler {
 	return FuncHandler(func(r *Record) error {
-		r.Context.Add("caller", fmt.Sprint(r.Call))
+		r.Context.Add("caller", PrettyCallerPrint(r.Call.(stack.Call)))
 		return h.Log(r)
 	})
+}
+
+var isClosureReg = regexp.MustCompile(`(\.func\d+|\-range\d+)(\.\d+)?$`)
+
+func isClosure(fn string) bool {
+	return isClosureReg.MatchString(fn)
+}
+func PrettyStackPrint(cs []stack.Call) string {
+	if len(cs) == 1 {
+		return cs[0].String()
+	}
+	var buf strings.Builder
+	buf.Grow(len(cs) * 32)
+	buf.WriteByte('[')
+	for i := len(cs) - 1; i >= 0; i-- {
+		buf.WriteString(cs[i].String())
+		if i > 0 {
+			buf.WriteString("->")
+		}
+	}
+	buf.WriteByte(']')
+	return buf.String()
+}
+func PrettyCallerPrint(c stack.Call) string {
+	// For closures, walk three additional stack frames upward and skip frames from the Go standard library
+	if isClosure(c.Frame().Function) {
+		s := stack.Trace().TrimBelow(c).TrimRuntime()
+		stackDepth := 3
+		if len(s) < stackDepth {
+			stackDepth = len(s)
+		}
+
+		s2 := make([]stack.Call, 0, stackDepth)
+		for i := 0; i < stackDepth && i < len(s); i++ {
+			cs := s[i : i+1]
+			if len(cs.TrimRuntime()) != 0 {
+				s2 = append(s2, s[i])
+			} else {
+				// The Go standard-library frames are already skipped, so we need to unwind one more level
+				stackDepth++
+			}
+		}
+
+		if len(s2) > 0 {
+			return PrettyStackPrint(s2)
+		}
+	}
+	return c.String()
 }
 
 // Adds in a context called `caller` to the record (contains file name and line number like `foo.go:12`)

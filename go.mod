@@ -12,12 +12,11 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/stretchr/testify v1.7.1
 	github.com/wiselike/revel-config v1.2.0
-	github.com/wiselike/revel-log15 v2.13.0+incompatible
+	github.com/wiselike/revel-log15 v2.14.0+incompatible
 	github.com/wiselike/revel-pathtree v0.0.0-20140121041023-41257a1839e9
 	github.com/xeonx/timeago v1.0.0-rc5
 	golang.org/x/net v0.7.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
-	gopkg.in/stack.v0 v0.0.0-20141108040640-9b43fcefddd0
 )
 
 require (

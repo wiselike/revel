@@ -3,8 +3,8 @@ package logger
 import (
 	"log"
 
+	"github.com/go-stack/stack"
 	log15 "github.com/wiselike/revel-log15"
-	"gopkg.in/stack.v0"
 )
 
 // Utility package to make existing logging backwards compatible.

@@ -17,10 +17,23 @@ import (
 // If no secret key is set, returns the empty string.
 // Return the signature in base64 (URLEncoding).
 func Sign(message string) string {
-	if len(secretKey) == 0 {
+	key, _ := GetSecretKey()
+	if key == nil {
 		return ""
 	}
-	mac := hmac.New(sha1.New, secretKey)
+	mac := hmac.New(sha1.New, key)
+	if _, err := io.WriteString(mac, message); err != nil {
+		utilLog.Error("WriteString failed", "error", err)
+		return ""
+	}
+	return hex.EncodeToString(mac.Sum(nil))
+}
+
+func signWithKey(message string, key []byte) string {
+	if key == nil {
+		return ""
+	}
+	mac := hmac.New(sha1.New, key)
 	if _, err := io.WriteString(mac, message); err != nil {
 		utilLog.Error("WriteString failed", "error", err)
 		return ""
@@ -31,7 +44,9 @@ func Sign(message string) string {
 // Verify returns true if the given signature is correct for the given message.
 // e.g. it matches what we generate with Sign().
 func Verify(message, sig string) bool {
-	return hmac.Equal([]byte(sig), []byte(Sign(message)))
+	curKey, oldKey := GetSecretKey()
+	return hmac.Equal([]byte(sig), []byte(signWithKey(message, curKey))) ||
+		hmac.Equal([]byte(sig), []byte(signWithKey(message, oldKey)))
 }
 
 // ToBool method converts/assert value into true or false. Default is true.

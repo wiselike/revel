@@ -8,9 +8,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"go/build"
+	"math/rand"
 	"net/http"
 	"path/filepath"
 	"strings"
+	"sync/atomic"
+	"time"
 
 	config "github.com/wiselike/revel-config"
 	"github.com/wiselike/revel/logger"
@@ -84,11 +87,16 @@ var (
 	Initialized bool
 
 	// Private.
-	secretKey      []byte                // Key used to sign cookies. An empty key disables signing.
+	secretKeys     atomic.Value          // Key used to sign cookies. An empty key disables signing.
 	packaged       bool                  // If true, this is running from a pre-built package.
 	initEventList  = []EventHandler{}    // Event handler list for receiving events
 	packagePathMap = map[string]string{} // The map of the directories needed
 )
+
+func init() {
+	secretKeys.Store([][]byte{nil, nil})
+	rand.Seed(time.Now().UnixNano())
+}
 
 // Init initializes Revel -- it provides paths for getting around the app.
 //
@@ -190,7 +198,15 @@ func Init(inputmode, importPath, srcPath string) {
 	}
 
 	if secretStr := Config.StringDefault("app.secret", ""); secretStr != "" {
-		SetSecretKey([]byte(secretStr))
+		initSecretKey(secretStr)
+	} else { // it is safe to let secret-key always not none.
+		initSecretKey(generateSecret())
+	}
+
+	if secretRotate := Config.BoolDefault("secret.secretRotate", false); secretRotate {
+		if ce := initCookieEngine().(*SessionCookieEngine); ce.ExpireAfterDuration > 0 {
+			go rotateSecret(ce.ExpireAfterDuration)
+		}
 	}
 
 	RaiseEvent(REVEL_BEFORE_MODULES_LOADED, nil)
@@ -199,6 +215,30 @@ func Init(inputmode, importPath, srcPath string) {
 
 	Initialized = true
 	RevelLog.Info("Initialized Revel", "Version", Version, "BuildDate", BuildDate, "MinimumGoVersion", MinimumGoVersion)
+}
+
+func rotateSecret(d time.Duration) {
+	if d < 10*time.Minute { // the min-rotate-time is 10min
+		d = 10 * time.Minute
+	}
+
+	ticker := time.NewTicker(d)
+	//defer ticker.Stop()
+	for range ticker.C {
+		SetSecretKey(generateSecret())
+	}
+}
+
+// Generate a secret key.
+func generateSecret() string {
+	const alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+	chars := make([]byte, 64)
+	for i := 0; i < 64; i++ {
+		chars[i] = alphaNumeric[rand.Intn(len(alphaNumeric))]
+	}
+
+	return string(chars)
 }
 
 // The input mode can be as simple as "prod" or it can be a JSON string like
@@ -263,10 +303,32 @@ func updateLog(inputmode string) (returnMode string) {
 	return
 }
 
-// Set the secret key.
-func SetSecretKey(newKey []byte) error {
-	secretKey = newKey
+// init the secret key.
+func initSecretKey(newKey string) error {
+	newKeys := make([][]byte, 2)
+	newKeys[0] = []byte(newKey)
+	newKeys[1] = nil
+
+	secretKeys.Store(newKeys) // 整体原子替换数据
 	return nil
+}
+
+// Set the secret key.
+func SetSecretKey(newKey string) error {
+	newKeys := make([][]byte, 2)
+
+	oldKeys := secretKeys.Load().([][]byte)
+	newKeys[1] = oldKeys[0]
+	newKeys[0] = []byte(newKey)
+
+	secretKeys.Store(newKeys) // 整体原子替换数据
+	return nil
+}
+
+// Get the secret key.
+func GetSecretKey() (latest, previous []byte) {
+	keys := secretKeys.Load().([][]byte)
+	return keys[0], keys[1]
 }
 
 // ResolveImportPath returns the filesystem path for the given import path.

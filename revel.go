@@ -204,9 +204,8 @@ func Init(inputmode, importPath, srcPath string) {
 	}
 
 	if secretRotate := Config.BoolDefault("secret.secretRotate", false); secretRotate {
-		if ce := initCookieEngine().(*SessionCookieEngine); ce.ExpireAfterDuration > 0 {
-			go rotateSecret(ce.ExpireAfterDuration)
-		}
+		ce := initCookieEngine().(*SessionCookieEngine)
+		go rotateSecret(ce.ExpireAfterDuration)
 	}
 
 	RaiseEvent(REVEL_BEFORE_MODULES_LOADED, nil)
@@ -218,8 +217,8 @@ func Init(inputmode, importPath, srcPath string) {
 }
 
 func rotateSecret(d time.Duration) {
-	if d < 10*time.Minute { // the min-rotate-time is 10min
-		d = 10 * time.Minute
+	if d < 15*time.Minute { // the min-rotate-time is 15min
+		d = 15 * time.Minute
 	}
 
 	ticker := time.NewTicker(d)

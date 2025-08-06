@@ -17,7 +17,7 @@ func TestSignWithKey(t *testing.T) {
 	key := []byte("abc123")
 	msg := "ping"
 
-	want := "064c703825c0f94b8f2f9e4f6914909a0374451e"
+	want := "b580e768a985ecd0d78fe3efac13c6d3a0337e52b04850d6d8425a3b69cb6275"
 
 	if got := signWithKey(msg, key); got != want {
 		t.Fatalf("Sign 结果不符合预期\nwant: %s\ngot : %s", want, got)

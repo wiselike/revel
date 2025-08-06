@@ -6,9 +6,8 @@ package revel
 
 import (
 	"crypto/hmac"
-	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/hex"
-	"io"
 	"reflect"
 	"strings"
 )
@@ -21,11 +20,9 @@ func Sign(message string) string {
 	if key == nil {
 		return ""
 	}
-	mac := hmac.New(sha1.New, key)
-	if _, err := io.WriteString(mac, message); err != nil {
-		utilLog.Error("WriteString failed", "error", err)
-		return ""
-	}
+	mac := hmac.New(sha256.New, key)
+	mac.Write([]byte(message))
+
 	return hex.EncodeToString(mac.Sum(nil))
 }
 
@@ -33,11 +30,9 @@ func signWithKey(message string, key []byte) string {
 	if key == nil {
 		return ""
 	}
-	mac := hmac.New(sha1.New, key)
-	if _, err := io.WriteString(mac, message); err != nil {
-		utilLog.Error("WriteString failed", "error", err)
-		return ""
-	}
+	mac := hmac.New(sha256.New, key)
+	mac.Write([]byte(message))
+
 	return hex.EncodeToString(mac.Sum(nil))
 }
 

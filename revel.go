@@ -203,7 +203,7 @@ func Init(inputmode, importPath, srcPath string) {
 		initSecretKey(generateSecret())
 	}
 
-	if secretRotate := Config.BoolDefault("secret.secretRotate", false); secretRotate {
+	if secretRotate := Config.BoolDefault("app.secret.rotate", false); secretRotate {
 		ce := initCookieEngine().(*SessionCookieEngine)
 		go rotateSecret(ce.ExpireAfterDuration)
 	}
